@@ -1,0 +1,108 @@
+<div class="d-flex flex-sm-row flex-row  justify-content-between gap-8 m-r-30 m-l-20">
+  <h1 style="margin: 25px" class="d-flex align-items-start">Stocks</h1>
+    <button mat-fab extended aria-label="Add stock" (click)="showModal(null,false,true)">
+      <div class="d-flex align-items-end">
+        <i-tabler class="icon-18 m-r-4" name="plus"></i-tabler><span> Ajouter un stock</span>
+      </div>
+    </button>
+</div>
+<div class="search-bar">
+  <span class="icon-left">🔍</span>
+  <input type="text" placeholder="Rechercher..." (keyup)="search($event)" />
+  <span class="icon-right">⭐</span>
+</div>
+<div *ngIf="addModal"
+     class="modal-overlay">
+  <div class="modal-content">
+    <app-add-stock (stockAdded)="onStockAdded($event)" (closed)="closeModal()"></app-add-stock>
+  </div>
+</div>
+<!-- Delete Category Modal-->
+<div class="modal-overlay" *ngIf="deleteModal">
+  <div class="modal-content flex justify-content-between align-items-center">
+    <h2>Etes vous sur de supprimer ce stock</h2>
+    <div class="modal-buttons">
+      <button mat-button style="color: white;background-color: red" (click)="deleteStock()">
+        Supprimer
+      </button>
+      <button mat-button style="color: black;background-color: white" (click)="closeModal()">
+        Annuler
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive" style="padding: 15px">
+  <mat-table [dataSource]="dataSource">
+
+    <!-- Name -->
+    <ng-container matColumnDef="produit">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" style="margin-left: 15px">
+        Produit
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element, let i=index" class="p-16 p-l-0">
+        <div class="d-flex align-items-center">
+          <div class="m-l-16">
+            <h6 class="f-s-14 f-w-600">
+              {{ getProductName(element.productId)}}
+            </h6>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Description -->
+    <ng-container matColumnDef="type">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+        Type
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 f-s-14">
+        {{ element.type }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+        Quantity
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 f-s-14">
+        {{ element.quantity }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="provider">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+        Fournisseur
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 f-s-14">
+        {{ getProviderName(element.providerId)}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+        Date
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 f-s-14">
+        {{ element.date | date:'dd/MM/yyyy' }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Action-->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 text-center">
+        Actions
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="text-center">
+        <button mat-icon-button style="color: red" (click)="showModal(element,true,false)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Rows -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+</div>
+
+
+

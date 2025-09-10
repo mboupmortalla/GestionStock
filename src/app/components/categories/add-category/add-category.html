@@ -1,0 +1,22 @@
+<form (ngSubmit)="addCategory()" #productForm="ngForm" class="add-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Nom</mat-label>
+    <input matInput [(ngModel)]="newCategory.name" name="name" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Description</mat-label>
+    <input matInput [(ngModel)]="newCategory.description" name="description">
+  </mat-form-field>
+
+
+
+  <div>
+    <button mat-raised-button color="color: white;background-color: red" type="submit">
+      Ajouter
+    </button>
+    <button mat-raised-button color="color: black;background-color: white" (click)="closeModal()">
+      Annuler
+    </button>
+  </div>
+</form>

@@ -1,0 +1,30 @@
+<form (ngSubmit)="addProvider()" #productForm="ngForm" class="add-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Nom</mat-label>
+    <input matInput [(ngModel)]="newProvider.name" name="name" required>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Adresse</mat-label>
+    <input matInput [(ngModel)]="newProvider.address" name="address">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Telephone</mat-label>
+    <input matInput type="number" [(ngModel)]="newProvider.telephone" name="telephone">
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput type="text" [(ngModel)]="newProvider.email" name="email">
+  </mat-form-field>
+
+  <div>
+    <button mat-raised-button color="color: white;background-color: red" type="submit">
+      Ajouter
+    </button>
+    <button mat-raised-button color="color: black;background-color: white" (click)="closeModal()">
+      Annuler
+    </button>
+  </div>
+</form>

@@ -1,0 +1,138 @@
+  <div class="d-flex flex-sm-row flex-row  justify-content-between gap-8 m-r-30 m-l-20">
+    <h1 style="margin: 25px" class="d-flex align-items-start">Produits</h1>
+    <button mat-fab extended aria-label="Add product" (click)="showModal(null,false,true)">
+      <div class="d-flex align-items-end">
+        <i-tabler class="icon-18 m-r-4" name="plus"></i-tabler><span> Ajouter un produit</span>
+      </div>
+    </button>
+  </div>
+  <div class="search-bar">
+    <span class="icon-left">🔍</span>
+    <input type="text" placeholder="Rechercher..." (keyup)="search($event)" />
+    <span class="icon-right">⭐</span>
+  </div>
+  <!-- Popup Modal -->
+  <div *ngIf="addModal"
+       class="modal-overlay">
+    <div class="modal-content">
+      <app-add-product (productAdded)="onProductAdded($event)"></app-add-product>
+    </div>
+  </div>
+
+  <div class="modal-overlay" *ngIf="deleteModal">
+    <div class="modal-content flex justify-content-between align-items-center">
+      <h2>Etes vous sur de supprimer ce produit</h2>
+      <div class="modal-buttons">
+        <button mat-button style="color: white;background-color: red" (click)="deleteProduct()">
+          Supprimer
+        </button>
+        <button mat-button style="color: black;background-color: white" (click)="closeModal()">
+          Annuler
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-responsive" style="padding: 15px">
+  <mat-table [dataSource]="dataSource">
+
+    <!-- Name -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 p-l-0" style="margin-left: 15px">
+        Name
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 p-l-0">
+        <div class="d-flex align-items-center">
+          <div class="m-l-16">
+            <h6 class="f-s-14 f-w-600">
+              {{ element.name }}
+            </h6>
+          </div>
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Description -->
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+        Description
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 f-s-14">
+        {{ element.description }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Quantity -->
+    <ng-container matColumnDef="quantity">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14">
+        Quantity
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16">
+        {{ element.quantity }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Price -->
+    <ng-container matColumnDef="purchasePrice">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 text-right p-r-0">
+        Price
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="p-16 f-s-14 text-right p-r-0">
+        {{ element.purchasePrice }}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef class="f-w-600 f-s-14 text-center">
+        Actions
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element" class="text-center">
+        <button mat-icon-button style="color: red" (click)="showModal(element,true,false)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button style="color: dimgray" (click)="edit(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <!-- Rows -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+</div>
+
+  <div class="modal-overlay" *ngIf="editModal && selected!=null">
+    <div class="modal-content">
+      <form (ngSubmit)="editProduct()" #productForm="ngForm" class="add-form">
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput [(ngModel)]="selected.name" name="name" required>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Description</mat-label>
+          <input matInput [(ngModel)]="selected.description" name="description">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Quantité</mat-label>
+          <input matInput type="number" [(ngModel)]="selected.quantity" name="quantity">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Prix d'achat</mat-label>
+          <input matInput type="number" [(ngModel)]="selected.purchasePrice" name="purchasePrice">
+        </mat-form-field>
+
+        <div>
+          <button mat-raised-button color="color: white;background-color: red" type="submit">
+            Modifier
+          </button>
+          <button mat-raised-button color="color: black;background-color: white"  (click)="closeModal()">
+            Annuler
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

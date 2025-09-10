@@ -1,0 +1,11 @@
+.add-form {
+  margin: 15px;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+mat-form-field {
+  flex: 1 1 200px;
+}

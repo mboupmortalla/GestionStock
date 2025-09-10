@@ -1,0 +1,55 @@
+<form (ngSubmit)="addCommand()" #commandForm="ngForm" class="add-form">
+  <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-12">Produit</mat-label>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-select [(value)]="selectedProduct">
+      @for(option of products; track option.productId) {
+        <mat-option [value]="option.productId">{{ option.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-12">Type</mat-label>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-select [(value)]="selectedType">
+      @for(option of type; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-12">Status</mat-label>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-select [(value)]="selectedStatus">
+      @for(option of status; track option) {
+        <mat-option [value]="option">{{ option }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-12">Clients</mat-label>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-select [(value)]="selectedClient">
+      @for(option of clients; track option.clientId) {
+        <mat-option [value]="option.clientId">{{ option.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <mat-label class="f-s-14 f-w-600 m-b-8 d-block">Date</mat-label>
+  <mat-form-field appearance="outline" class="w-100" color="primary">
+    <input matInput type="date" [(ngModel)]="newCommand.date" name="date"/>
+  </mat-form-field>
+  <mat-label class="f-s-14 f-w-600 m-b-8 d-block m-t-12">Fournisseur</mat-label>
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-select [(value)]="selectedProvider">
+      @for(option of providers; track option.providerId) {
+        <mat-option [value]="option.providerId">{{ option.name }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+
+  <div class="m-12">
+    <button mat-raised-button style="color: white;background-color: red" type="submit" class="m-10">
+      Ajouter
+    </button>
+    <button mat-stroked-button style="color: black;background-color: white"  (click)="closeModal()">
+      Annuler
+    </button>
+  </div>
+</form>
